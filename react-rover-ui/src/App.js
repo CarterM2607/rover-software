@@ -6,6 +6,7 @@ import { VideoStream } from "./components/VideoStream";
 import { MultiVideoStream } from "./components/MultiVideoStream";
 import { VehicleHealth } from "./components/VehicleHealth";
 import { MapControlPanel } from "./components/MapControlPanel";
+import { Connections } from "./components/Connections";
 
 function App() {
   const [markerCoordinates, setMarkerCoordinates] = useState({lng: null, lat: null})
@@ -37,8 +38,15 @@ function App() {
   <div className="primary-container">
     <div className="data-panel">
       <div className="data-container">
-        <div className="connections"></div>
-        <div className="vehicle-health"><VehicleHealth /></div>
+        <div className="connections">
+        <Connections
+          bit_rate={Connections.bit_rate}
+          link_quality={Connections.link_quality}
+          signal={Connections.signal}
+          coordinateValues={Connections.noise}
+        />
+        </div>
+        <div className="vehicle-health"><VehicleHealth/></div>
       </div>
     </div>
     <div className="map-view" style={{ height: "100%", width: "100%", display: "inline-block" }}>
