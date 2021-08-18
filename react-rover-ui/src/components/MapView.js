@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ROSLIB from 'roslib';
 import {
   MapContainer,
   TileLayer,
@@ -11,7 +12,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 import icon from "leaflet/dist/images/marker-icon.png";
-import roverIcon from "../img/rover-icon.png";
+import roverIcon from "../img/rover2.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 
 let DefaultIcon = L.icon({
@@ -28,6 +29,28 @@ let RoverIcon = L.icon({
 });
 
 L.Marker.prototype.options.icon = DefaultIcon;
+
+var ros = new ROSLIB.Ros({
+url : 'ws://localhost:9090'
+});
+
+ros.on('connection', function() {
+console.log('Connected to websocket server');
+});
+
+ros.on('error', function(error) {
+console.log('Error connecting to websocket server: ', error);
+});
+
+ros.on('close', function() {
+console.log('Connection to websocket server closed.');
+});
+
+var listener = new ROSLIB.Topic({
+ros : ros,
+name : '/rover/MapView',
+messageType: 'rover/GpsCoords'
+});
 
 function ClickHandler(props) {
   useMapEvent({
@@ -55,15 +78,19 @@ function drawPaths(waypoints) {
 
 export function MapView(props){
   const [roverPosition, setRoverPosition] = useState(L.latLng(51.076672, -114.137474));
-  const [waypoints, setWaypoints] = useState([roverPosition]);
+  const [waypoints, setWaypoints] = useState([]);
   const [paths, setPaths] = useState([]);
   // const [breakOrJoin, setBreakOrJoin] = useState([])
 
   const popupButtonVisibility = props.mapInteraction.userMode === "edit" ? "visible": "hidden";
 
-  function updateRoverPosition(newPosition){
-    setRoverPosition(newPosition)
-  }
+  listener.subscribe(function(message){
+    setRoverPosition(L.latLng(message.latitude, message.longitude));
+  });
+
+  //function updateRoverPosition(newPosition){
+    //setRoverPosition(newPosition)
+  //}
 
   function addWaypoint(position) {
     let newWaypoints = waypoints.concat(position)
@@ -142,6 +169,16 @@ export function MapView(props){
             positions={positions}
           />
         ))}
+
+        <Marker position = {roverPosition} icon = {RoverIcon}>
+            <Popup>
+              Rover
+              <br />
+              Lat: {roverPosition.lat}
+              <br />
+              Lng: {roverPosition.lng}
+            </Popup>
+        </Marker>
 
       </MapContainer>
     );
