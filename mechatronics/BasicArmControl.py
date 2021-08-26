@@ -1,9 +1,11 @@
-from Phidget22.Phidget import *
-from Phidget22.Devices.Log import *
-from Phidget22.LogLevel import *
-from Phidget22.Devices.Stepper import *
-from pyPS4Controller.controller import Controller
 import traceback
+
+from Phidget22.Devices.Log import *
+from Phidget22.Devices.Stepper import *
+from Phidget22.LogLevel import *
+from Phidget22.Phidget import *
+from pyPS4Controller.controller import Controller
+
 
 class MyController(Controller):
     global base_motor, shoulder_motor1, shoulder_motor2, elbow_motor, wrist_motor, claw_motor
