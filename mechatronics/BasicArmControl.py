@@ -66,22 +66,23 @@ class MyController(Controller):
     # Claw motor movement keys
     def on_x_press(self):
         if not claw_motor.getIsMoving():
-            claw_motor.setVelocityLimit(20)
+            claw_motor.setVelocityLimit(-20)
 
     def on_x_release(self):
         claw_motor.setVelocityLimit(0)
 
     def on_triangle_press(self):
         if not claw_motor.getIsMoving():
-            claw_motor.setVelocityLimit(-20)
+            claw_motor.setVelocityLimit(20)
 
     def on_triangle_release(self):
-        wrist_motor.setVelocityLimit(0)
+        claw_motor.setVelocityLimit(0)
 
     # hold position
     def on_circle_press(self):
         claw_motor.setVelocityLimit(0)
 
+    # quit the program
     def on_playstation_button_press(self):
         print("Quitting programming...")
         base_motor.setEngaged(False)
