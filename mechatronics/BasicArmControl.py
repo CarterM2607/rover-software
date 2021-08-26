@@ -157,17 +157,9 @@ try:
     Log.enable(LogLevel.PHIDGET_LOG_INFO, "PhidgetArmLog.log")
     initialize_motors(all_motor_names, all_motor_info)
 
-    # Collect events until released
-    # with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
-    #     listener.join()
-
     controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
     # you can start listening before controller is paired, as long as you pair it within the timeout window
     controller.listen(timeout=60)
-    # try:
-    #    input("Press Enter to Stop\n")
-    # except (Exception, KeyboardInterrupt):
-    #    pass
 
     base_motor.close()
     shoulder_motor1.close()
