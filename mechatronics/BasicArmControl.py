@@ -16,9 +16,15 @@ class MyController(Controller):
         if not base_motor.getIsMoving():
             base_motor.setVelocityLimit(30)
 
+    def on_L2_release(self):
+        base_motor.setVelocityLimit(0)
+
     def on_R2_press(self, value):
         if not base_motor.getIsMoving():
             base_motor.setVelocityLimit(-30)
+
+    def on_R2_release(self):
+        base_motor.setVelocityLimit(0)
 
     # Shoulder motor movement keys
     def on_L3_up(self, value):
@@ -45,61 +51,44 @@ class MyController(Controller):
         if not wrist_motor.getIsMoving():
             wrist_motor.setVelocityLimit(50)
 
+    def on_L1_release(self):
+        wrist_motor.setVelocityLimit(0)
+
     def on_R1_press(self):
         if not wrist_motor.getIsMoving():
             wrist_motor.setVelocityLimit(-50)
+
+    def on_R1_release(self):
+        wrist_motor.setVelocityLimit(0)
 
     # Claw motor movement keys
     def on_x_press(self):
         if not claw_motor.getIsMoving():
             claw_motor.setVelocityLimit(20)
 
+    def on_x_release(self):
+        claw_motor.setVelocityLimit(0)
+
     def on_triangle_press(self):
         if not claw_motor.getIsMoving():
             claw_motor.setVelocityLimit(-20)
+
+    def on_triangle_release(self):
+        wrist_motor.setVelocityLimit(0)
 
     # hold position
     def on_circle_press(self):
         claw_motor.setVelocityLimit(0)
 
-
-def on_release(key):
-    global base_motor, shoulder_motor1, shoulder_motor2, elbow_motor, wrist_motor, claw_motor
-    try:
-        # Base motor off
-        if key.char == 'q' or key.char == 'w':
-            base_motor.setVelocityLimit(0)
-
-        # Shoulder motors off
-        if key.char == 'e' or key.char == 'r':
-            shoulder_motor1.setVelocityLimit(0)
-            shoulder_motor2.setVelocityLimit(0)
-
-        # Elbow motor off
-        if key.char == 'a' or key.char == 's':
-            elbow_motor.setVelocityLimit(0)
-
-        # Wrist motor off
-        if key.char == 'd' or key.char == 'f':
-            wrist_motor.setVelocityLimit(0)
-
-        # Claw motor off
-        if key.char == 'g' or key.char == 'h':
-            claw_motor.setVelocityLimit(0)
-
-        # End listener on ESC
-        if key.char == 'p':
-            print("Quitting programming...")
-            base_motor.setEngaged(False)
-            shoulder_motor1.setEngaged(False)
-            shoulder_motor2.setEngaged(False)
-            elbow_motor.setEngaged(False)
-            wrist_motor.setEngaged(False)
-            claw_motor.setEngaged(False)
-            return False
-
-    except AttributeError:
-        print("Special key {0} released".format(key))
+    def on_playstation_button_press(self):
+        print("Quitting programming...")
+        base_motor.setEngaged(False)
+        shoulder_motor1.setEngaged(False)
+        shoulder_motor2.setEngaged(False)
+        elbow_motor.setEngaged(False)
+        wrist_motor.setEngaged(False)
+        claw_motor.setEngaged(False)
+        return False
 
 
 def onAttach(motor_number):
