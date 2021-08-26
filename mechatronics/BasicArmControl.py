@@ -92,6 +92,14 @@ class MyController(Controller):
         claw_motor.setEngaged(False)
         return False
 
+    def on_options_press(self):
+        base_motor.setTargetPosition((base_motor.getMaxPosition() + base_motor.getMinPosition()) / 2)
+        shoulder_motor1.setTargetPosition((shoulder_motor1.getMaxPosition() + shoulder_motor1.getMinPosition()) / 2)
+        shoulder_motor2.setTargetPosition((shoulder_motor2.getMaxPosition() + shoulder_motor2.getMinPosition()) / 2)
+        wrist_motor.setTargetPosition((wrist_motor.getMaxPosition() + wrist_motor.getMinPosition()) / 2)
+        elbow_motor.setTargetPosition((elbow_motor.getMaxPosition() + elbow_motor.getMinPosition()) / 2)
+        claw_motor.setTargetPosition((claw_motor.getMaxPosition() + claw_motor.getMinPosition()) / 2)
+
 
 def onAttach(motor_number):
     print("Motor {0} attached!".format(motor_number))
