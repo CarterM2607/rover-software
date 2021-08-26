@@ -1,68 +1,66 @@
-from Phidget22.PhidgetException import *
 from Phidget22.Phidget import *
 from Phidget22.Devices.Log import *
 from Phidget22.LogLevel import *
 from Phidget22.Devices.Stepper import *
-
-from pynput import keyboard
-from pynput.keyboard import Key, Listener
-# import os
-# import shutil
+from pyPS4Controller.controller import Controller
 import traceback
-import time
 
-
-def on_press(key):
+class MyController(Controller):
     global base_motor, shoulder_motor1, shoulder_motor2, elbow_motor, wrist_motor, claw_motor
-    try:
-        # Base motor movement keys
-        if key.char == 'q':
-            if not base_motor.getIsMoving():
-                base_motor.setVelocityLimit(30)
-        elif key.char == 'w':
-            if not base_motor.getIsMoving():
-                base_motor.setVelocityLimit(-30)
 
-        # Shoulder motor movement keys
-        if key.char == 'e':
-            if not shoulder_motor1.getIsMoving():
-                shoulder_motor1.setVelocityLimit(50)
-                shoulder_motor2.setVelocityLimit(-50)
-        elif key.char == 'r':
-            if not shoulder_motor1.getIsMoving():
-                shoulder_motor1.setVelocityLimit(-50)
-                shoulder_motor2.setVelocityLimit(50)
+    # Base motor movement keys
+    def __init__(self, **kwargs):
+        Controller.__init__(self, **kwargs)
 
-        # Elbow motor movement keys
-        if key.char == 'a':
-            if not elbow_motor.getIsMoving():
-                elbow_motor.setVelocityLimit(50)
-        elif key.char == 's':
-            if not elbow_motor.getIsMoving():
-                elbow_motor.setVelocityLimit(-50)
+    def on_L2_press(self, value):
+        if not base_motor.getIsMoving():
+            base_motor.setVelocityLimit(30)
 
-        # Wrist motor movement keys
-        if key.char == 'd':
-            if not wrist_motor.getIsMoving():
-                wrist_motor.setVelocityLimit(50)
-        elif key.char == 'f':
-            if not wrist_motor.getIsMoving():
-                wrist_motor.setVelocityLimit(-50)
+    def on_R2_press(self, value):
+        if not base_motor.getIsMoving():
+            base_motor.setVelocityLimit(-30)
 
-        # Claw motor movement keys
-        if key.char == 'g':
-            if not claw_motor.getIsMoving():
-                claw_motor.setVelocityLimit(20)
-        elif key.char == 'h':
-            if not claw_motor.getIsMoving():
-                claw_motor.setVelocityLimit(-20)
+    # Shoulder motor movement keys
+    def on_L3_up(self, value):
+        if not shoulder_motor1.getIsMoving():
+            shoulder_motor1.setVelocityLimit(50)
+            shoulder_motor2.setVelocityLimit(-50)
 
-        # Pass on ESC press
-        if key.char == 'p':
-            pass
+    def on_L3_down(self, value):
+        if not shoulder_motor1.getIsMoving():
+            shoulder_motor1.setVelocityLimit(-50)
+            shoulder_motor2.setVelocityLimit(50)
 
-    except AttributeError:
-        print("Special key {0} pressed".format(key))
+    # Elbow motor movement keys
+    def on_R3_up(self, value):
+        if not elbow_motor.getIsMoving():
+            elbow_motor.setVelocityLimit(50)
+
+    def on_R3_down(self, value):
+        if not elbow_motor.getIsMoving():
+            elbow_motor.setVelocityLimit(-50)
+
+    # Wrist motor movement keys
+    def on_L1_press(self):
+        if not wrist_motor.getIsMoving():
+            wrist_motor.setVelocityLimit(50)
+
+    def on_R1_press(self):
+        if not wrist_motor.getIsMoving():
+            wrist_motor.setVelocityLimit(-50)
+
+    # Claw motor movement keys
+    def on_x_press(self):
+        if not claw_motor.getIsMoving():
+            claw_motor.setVelocityLimit(20)
+
+    def on_triangle_press(self):
+        if not claw_motor.getIsMoving():
+            claw_motor.setVelocityLimit(-20)
+
+    # hold position
+    def on_circle_press(self):
+        claw_motor.setVelocityLimit(0)
 
 
 def on_release(key):
@@ -161,9 +159,13 @@ try:
     initialize_motors(all_motor_names, all_motor_info)
 
     # Collect events until released
-    with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
-        listener.join()
-        # try:
+    # with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+    #     listener.join()
+
+    controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
+    # you can start listening before controller is paired, as long as you pair it within the timeout window
+    controller.listen(timeout=60)
+    # try:
     #    input("Press Enter to Stop\n")
     # except (Exception, KeyboardInterrupt):
     #    pass
