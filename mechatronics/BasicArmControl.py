@@ -92,6 +92,7 @@ class MyController(Controller):
         claw_motor.setEngaged(False)
         return False
 
+    # This may not work, but should be useful to avoid the calibration mode.
     def on_options_press(self):
         base_motor.setTargetPosition((base_motor.getMaxPosition() + base_motor.getMinPosition()) / 2)
         shoulder_motor1.setTargetPosition((shoulder_motor1.getMaxPosition() + shoulder_motor1.getMinPosition()) / 2)
