@@ -88,10 +88,6 @@ export function MapView(props){
     setRoverPosition(L.latLng(message.latitude, message.longitude));
   });
 
-  //function updateRoverPosition(newPosition){
-    //setRoverPosition(newPosition)
-  //}
-
   function addWaypoint(position) {
     let newWaypoints = waypoints.concat(position)
     props.changeWaypoints(newWaypoints);
@@ -133,7 +129,6 @@ export function MapView(props){
 
    return (
       <MapContainer
-        // onClick={this.handleClick}
         center={props.defaultCenter}
         zoom={17}
         scrollWheelZoom={false}
