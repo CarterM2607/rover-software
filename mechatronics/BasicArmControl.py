@@ -121,7 +121,7 @@ def onError(self, code, description):
 
 def initialize_motors(motors, motors_info):
     for i in range(len(motors)):
-        motors[i].setDeviceSerialNumber(620000)
+        motors[i].setDeviceSerialNumber(627531)
         motors[i].setHubPort(i)
         motors[i].setOnAttachHandler(onAttach(i))
         motors[i].setOnDetachHandler(onDetach)
