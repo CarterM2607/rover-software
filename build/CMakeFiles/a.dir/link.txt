@@ -1,0 +1,2 @@
+/usr/bin/ar qc liba.a  CMakeFiles/a.dir/a.cpp.o
+/usr/bin/ranlib liba.a
