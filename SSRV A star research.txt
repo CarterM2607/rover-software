@@ -1,0 +1,6 @@
+https://www.pyimagesearch.com/2016/01/11/opencv-panorama-stitching/#download-the-code
+
+
+https://towardsdatascience.com/a-star-a-search-algorithm-eb495fb156bb
+https://www.fatalerrors.org/a/a-star-algorithm-and-its-implementation-in-python.html
+https://gist.github.com/jamiees2/5531924
