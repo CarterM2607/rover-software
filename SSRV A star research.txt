@@ -1,6 +1,9 @@
 https://www.pyimagesearch.com/2016/01/11/opencv-panorama-stitching/#download-the-code
 
-
+A*
 https://towardsdatascience.com/a-star-a-search-algorithm-eb495fb156bb
 https://www.fatalerrors.org/a/a-star-algorithm-and-its-implementation-in-python.html
 https://gist.github.com/jamiees2/5531924
+
+depth
+https://medium.com/@omar.ps16/stereo-3d-reconstruction-with-opencv-using-an-iphone-camera-part-ii-77754b58bfe0
