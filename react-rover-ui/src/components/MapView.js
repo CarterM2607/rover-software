@@ -58,6 +58,7 @@ function ClickHandler(props) {
       if (props.mapInteraction.userMode === "view") {
         return;
       }
+      
       props.addWaypoint(e.latlng);
     },
   });
@@ -80,6 +81,7 @@ export function MapView(props){
   const [roverPosition, setRoverPosition] = useState(L.latLng(51.076672, -114.137474));
   const [waypoints, setWaypoints] = useState([]);
   const [paths, setPaths] = useState([]);
+  let index = -1; 
   // const [breakOrJoin, setBreakOrJoin] = useState([])
 
   const popupButtonVisibility = props.mapInteraction.userMode === "edit" ? "visible": "hidden";
@@ -88,17 +90,49 @@ export function MapView(props){
     setRoverPosition(L.latLng(message.latitude, message.longitude));
   });
 
-  //function updateRoverPosition(newPosition){
-    //setRoverPosition(newPosition)
-  //}
-
   function addWaypoint(position) {
-    let newWaypoints = waypoints.concat(position)
-    props.changeWaypoints(newWaypoints);
-    setWaypoints(newWaypoints);
-    setPaths(drawPaths(newWaypoints));
+
+    let indexOfMarker = index;
+
+    if(index < 0){
+      let newWaypoints = waypoints.concat(position);
+      props.changeWaypoints(newWaypoints);
+      setWaypoints(newWaypoints);
+      setPaths(drawPaths(newWaypoints));
+    }
+
+    else{
+      let newWaypointsBefore = waypoints.filter((position, idx) =>{ 
+        if(idx > indexOfMarker)
+          return false;
+
+        return true;
+      });
+
+      let newWaypointsAfter = waypoints.filter((position, idx) =>{
+        if(idx <= indexOfMarker)
+          return false;
+
+        return true;
+      });
+
+      let insertedWaypoint = newWaypointsBefore.concat(position);
+
+      let newWaypoints = insertedWaypoint.concat(newWaypointsAfter);
+
+      index = -1;
+
+      props.changeWaypoints(newWaypoints);
+      setWaypoints(newWaypoints);
+      setPaths(drawPaths(newWaypoints));
+    }
+
   }
 
+  function setIndex(markerIndex){
+    index = markerIndex;
+  }
+  
   function removeAndJoin(markersPosition){
     let newWaypoints = waypoints.filter(position => position != markersPosition);
     props.changeWaypoints(newWaypoints);
@@ -133,7 +167,6 @@ export function MapView(props){
 
    return (
       <MapContainer
-        // onClick={this.handleClick}
         center={props.defaultCenter}
         zoom={17}
         scrollWheelZoom={false}
@@ -158,6 +191,7 @@ export function MapView(props){
               <br/>
               <button style={{visibility: popupButtonVisibility}} onClick={() => removeAndJoin(position)}>Remove & Join</button>
               <button style={{visibility: popupButtonVisibility}} onClick={() => removeAllAfter(position)}>Remove All After</button>
+              <button style={{visibility: popupButtonVisibility}} onClick={() => setIndex(idx)}>Insert After</button>
             </Popup>
           </Marker>
           ))}

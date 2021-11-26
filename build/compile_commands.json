@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/nicho/Documents/rover-software/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7    -g   -o CMakeFiles/a.dir/a.cpp.o -c /home/nicho/Documents/rover-software/a.cpp",
+  "file": "/home/nicho/Documents/rover-software/a.cpp"
+}
+]

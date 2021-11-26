@@ -1,0 +1,18 @@
+https://www.pyimagesearch.com/2016/01/11/opencv-panorama-stitching/#download-the-code
+
+A*
+https://towardsdatascience.com/a-star-a-search-algorithm-eb495fb156bb
+https://www.fatalerrors.org/a/a-star-algorithm-and-its-implementation-in-python.html
+https://gist.github.com/jamiees2/5531924
+
+depth
+https://medium.com/@omar.ps16/stereo-3d-reconstruction-with-opencv-using-an-iphone-camera-part-ii-77754b58bfe0
+https://github.com/opencv/opencv/blob/master/samples/python/stereo_match.py
+https://www.andreasjakl.com/how-to-apply-stereo-matching-to-generate-depth-maps-part-3/
+https://answers.opencv.org/question/187734/derivation-for-perspective-transformation-matrix-q/?answer=187997#post-id-187997
+
+calibration
+https://medium.com/vacatronics/3-ways-to-calibrate-your-camera-using-opencv-and-python-395528a51615
+
+video frame capture:
+https://stackoverflow.com/questions/43961886/get-a-frame-from-a-live-video-stream
