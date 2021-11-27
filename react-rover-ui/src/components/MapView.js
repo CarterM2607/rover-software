@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ROSLIB from 'roslib';
+import { CSVLink } from "react-csv";
 import {
   MapContainer,
   TileLayer,
@@ -52,6 +53,7 @@ name : '/rover/MapView',
 messageType: 'rover/GpsCoords'
 });
 
+//adds waypoints to the map if in edit mode
 function ClickHandler(props) {
   useMapEvent({
     click(e) {
@@ -65,6 +67,8 @@ function ClickHandler(props) {
   return null;
 }
 
+//Draws the paths between waypoints
+//sends the waypoints into a csv file to save waypoints for future use
 function drawPaths(waypoints) {
     let newPaths = [];
     if (waypoints.length < 2) {
@@ -77,6 +81,7 @@ function drawPaths(waypoints) {
     return newPaths;
   }
 
+  //most of the waypoints functionality
 export function MapView(props){
   const [roverPosition, setRoverPosition] = useState(L.latLng(51.076672, -114.137474));
   const [waypoints, setWaypoints] = useState([]);
@@ -90,6 +95,9 @@ export function MapView(props){
     setRoverPosition(L.latLng(message.latitude, message.longitude));
   });
 
+  //adds a waypoint to the list of waypoints
+  //if insert button is pressed, next way point is inserted after the waypoint associated with the insert button
+  //when inserting, creates temp waypoint lists for before the index waypoint and after. new waypoints are concated to the before list and then after is concated. 
   function addWaypoint(position) {
 
     let indexOfMarker = index;
@@ -129,10 +137,12 @@ export function MapView(props){
 
   }
 
+  //sets the index when inserting waypoints
   function setIndex(markerIndex){
     index = markerIndex;
   }
   
+  //removes current waypoint and connects next and previous waypoints
   function removeAndJoin(markersPosition){
     let newWaypoints = waypoints.filter(position => position != markersPosition);
     props.changeWaypoints(newWaypoints);
@@ -140,6 +150,7 @@ export function MapView(props){
     setPaths(drawPaths(newWaypoints));
   }
 
+  //removes all waypoints after selected waypoint
   function removeAllAfter(markersPosition){
     let indexOfMarker = waypoints.length;
 
@@ -164,6 +175,7 @@ export function MapView(props){
       
   }, [props.coordinateValues]);
 
+  //CSVLink is a button that downloads the current waypoints as a csv. can be clicked from any waypoint. 
 
    return (
       <MapContainer
@@ -192,6 +204,11 @@ export function MapView(props){
               <button style={{visibility: popupButtonVisibility}} onClick={() => removeAndJoin(position)}>Remove & Join</button>
               <button style={{visibility: popupButtonVisibility}} onClick={() => removeAllAfter(position)}>Remove All After</button>
               <button style={{visibility: popupButtonVisibility}} onClick={() => setIndex(idx)}>Insert After</button>
+              
+              <CSVLink data={waypoints} filename="waypoints.csv" onClick={() => {
+                console.log("you click the link");
+              }}>
+              download waypoints</CSVLink>
             </Popup>
           </Marker>
           ))}
