@@ -2,6 +2,8 @@ import React, { Component, useState, useEffect } from 'react';
 import EventEmitter2 from 'eventemitter2';
 import ROSLIB from 'roslib';
 
+
+
 var ros = new ROSLIB.Ros({
   url : 'ws://localhost:9090'
 });
@@ -28,11 +30,15 @@ listener.subscribe(function(message) {
   console.log('Received message on ' + listener.name + ': ' + message.latitude + " " + message.longitude);
 });
 
+//Function component MapControlPanel with state RouteMode, this is the pannel
+//below
 export function MapControlPanel(props){
   const [routeMode, setRouteMode] = useState("Edit Route")
 
+  //if in edit route mode, return visibility = hidden
   const visibility = routeMode === "Edit Route" ? "hidden": "visible";
 
+  //onSubmit is the even that triggers addCoordinate
   function addCoordinate(event){
     event.preventDefault();
     if(event.target.longitude.value !== "" && event.target.latitude.value !== ""){
@@ -50,10 +56,22 @@ export function MapControlPanel(props){
     props.changeUserMode(newUserMode);
   }
 
+
+
+
   return (
   <div>
-    <button onClick={changeRouteMode}>{routeMode}</button><br/>
 
+    <button onClick={changeRouteMode}>{routeMode}</button><br/>
+    
+    <button 
+      style = {{
+        position: 'relative',
+        right : -90,
+        top: -22
+      }}
+    > Load CSV</button><br/>
+ 
     <form style={{visibility: visibility}}  onSubmit={addCoordinate}>
       <label for="longitude">Longitude:</label>
       <input type="number" step="any" id="longitude" name="longitude" ></input>
