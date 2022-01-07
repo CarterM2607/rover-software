@@ -1,6 +1,11 @@
 import React, { Component, useState, useEffect } from 'react';
 import EventEmitter2 from 'eventemitter2';
 import ROSLIB from 'roslib';
+import { csv } from 'd3';
+import csvFilePath from './waypoints.csv';
+
+
+
 
 
 
@@ -34,8 +39,9 @@ listener.subscribe(function(message) {
 //below
 export function MapControlPanel(props){
   const [routeMode, setRouteMode] = useState("Edit Route")
+  const [waypoints, setWaypoints] = useState([])
 
-  //if in edit route mode, return visibility = hidden
+  //if in edit route mode, return visibility == hidden
   const visibility = routeMode === "Edit Route" ? "hidden": "visible";
 
   //onSubmit is the even that triggers addCoordinate
@@ -56,21 +62,26 @@ export function MapControlPanel(props){
     props.changeUserMode(newUserMode);
   }
 
-
-
+  //function parse csv file located at csvFilePath to be parsed into an array
+  function loadCSV(){
+    csv(csvFilePath).then(data => {
+      console.log(data);
+    })
+  }
 
   return (
   <div>
 
     <button onClick={changeRouteMode}>{routeMode}</button><br/>
-    
+  
     <button 
+    
       style = {{
         position: 'relative',
         right : -90,
-        top: -22
+        top: -21
       }}
-    > Load CSV</button><br/>
+      onClick = {loadCSV} > Load CSV</button><br/>
  
     <form style={{visibility: visibility}}  onSubmit={addCoordinate}>
       <label for="longitude">Longitude:</label>

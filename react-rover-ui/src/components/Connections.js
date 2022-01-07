@@ -25,12 +25,16 @@ var ros = new ROSLIB.Ros({
   });
 
   
+//function component called Connections
+//has four states, bit_rate, link_quality, signal, noise  
 export function Connections(props){
   const [bit_rate, setBit] = useState("N/A");
   const [link_quality, setLink] = useState("N/A");
   const [signal, setSignal] = useState("N/A");
   const [noise, setNoise] = useState("N/A");
 
+  // when you a message,message contains the four states that can change
+  // the current state
   listener.subscribe(function(message) {
     setBit(message.bit_rate);
     setLink(message.link_quality);
