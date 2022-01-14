@@ -3,6 +3,7 @@ import EventEmitter2 from 'eventemitter2';
 import ROSLIB from 'roslib';
 import { csv } from 'd3';
 import csvFilePath from './waypoints.csv';
+import { MapView } from './MapView';
 
 
 
@@ -65,7 +66,20 @@ export function MapControlPanel(props){
   //function parse csv file located at csvFilePath to be parsed into an array
   function loadCSV(){
     csv(csvFilePath).then(data => {
-      console.log(data);
+      let csvWaypoints;
+      for(let i = 0; i < data.length; i++){
+        const newCoordinate = {long: data[i].lng, lat: data[i].lat};
+        props.addMarker(newCoordinate);
+        props.waypoints.map((newCoordinate, i) => (
+          <div style={{overflow: "auto", fontSize: "14px"}} >
+        <span>
+          <strong>Point#:</strong> {i},
+          <strong>   Longitude:</strong> {newCoordinate.lng},
+          <strong>   Latitude:</strong> {newCoordinate.lat}
+        </span><br/>
+      </div>
+        ));
+      }
     })
   }
 
