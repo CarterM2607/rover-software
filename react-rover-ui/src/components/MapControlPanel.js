@@ -32,20 +32,24 @@ var listener = new ROSLIB.Topic({
   messageType: 'rover/GpsCoords'
 });
 
+// message contains the location of the rover currently
 listener.subscribe(function(message) {
   console.log('Received message on ' + listener.name + ': ' + message.latitude + " " + message.longitude);
 });
+
+
+
 
 //Function component MapControlPanel with state RouteMode, this is the pannel
 //below
 export function MapControlPanel(props){
   const [routeMode, setRouteMode] = useState("Edit Route")
-  const [waypoints, setWaypoints] = useState([])
+
 
   //if in edit route mode, return visibility == hidden
   const visibility = routeMode === "Edit Route" ? "hidden": "visible";
 
-  //onSubmit is the even that triggers addCoordinate
+  //onSubmit is the event that triggers addCoordinate
   function addCoordinate(event){
     event.preventDefault();
     if(event.target.longitude.value !== "" && event.target.latitude.value !== ""){
@@ -93,7 +97,7 @@ export function MapControlPanel(props){
       style = {{
         position: 'relative',
         right : -90,
-        top: -21
+        top: -22
       }}
       onClick = {loadCSV} > Load CSV</button><br/>
  

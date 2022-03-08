@@ -93,6 +93,11 @@ export function MapView(props){
 
   listener.subscribe(function(message){
     setRoverPosition(L.latLng(message.latitude, message.longitude));
+    
+
+    // console.log for testing purposes
+    console.log(message.latitude);
+    console.log(message.longitude);
   });
 
   //adds a waypoint to the list of waypoints
@@ -221,6 +226,7 @@ export function MapView(props){
           />
         ))}
 
+          
         <Marker position = {roverPosition} icon = {RoverIcon}>
             <Popup>
               Rover
@@ -230,6 +236,7 @@ export function MapView(props){
               Lng: {roverPosition.lng}
             </Popup>
         </Marker>
+
 
       </MapContainer>
     );
