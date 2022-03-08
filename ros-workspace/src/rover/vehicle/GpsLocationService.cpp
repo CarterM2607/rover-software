@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 
 	ros::Rate rate(50);
 
-	if ((fd = openGPSPort("/dev/ttyACM1")) < 0)
+	if ((fd = openGPSPort("/dev/ttyACM0")) < 0)
 	{
 		printf("Cannot open GPS port\r\n.");
 		return 0;

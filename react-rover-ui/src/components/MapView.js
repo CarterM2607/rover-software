@@ -47,10 +47,16 @@ ros.on('close', function() {
 console.log('Connection to websocket server closed.');
 });
 
+// var listener = new ROSLIB.Topic({
+// ros : ros,
+// name : 'rover/gps_report',
+// messageType: 'rover/GpsCoords'
+// });
+
 var listener = new ROSLIB.Topic({
 ros : ros,
-name : '/rover/MapView',
-messageType: 'rover/GpsCoords'
+name : 'test',
+messageType: 'std_msgs/String'
 });
 
 //adds waypoints to the map if in edit mode
@@ -92,8 +98,9 @@ export function MapView(props){
   const popupButtonVisibility = props.mapInteraction.userMode === "edit" ? "visible": "hidden";
 
   listener.subscribe(function(message){
-    setRoverPosition(L.latLng(message.latitude, message.longitude));
+    //setRoverPosition(L.latLng(message.latitude, message.longitude));
     
+    console.log("TESTING");
 
     // console.log for testing purposes
     console.log(message.latitude);
