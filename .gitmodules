@@ -1,0 +1,3 @@
+[submodule "ros-workspace/src/drivers/ublox"]
+	path = ros-workspace/src/drivers/ublox
+	url = https://github.com/ucalgary-rover/ublox.git
