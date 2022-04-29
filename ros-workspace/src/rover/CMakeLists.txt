@@ -148,11 +148,8 @@ include_directories(include ${catkin_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/externa
 add_executable(hello tutorial/Hello.cpp)
 
 add_executable(gps_mock mocks/MockGps.cpp)
-add_executable(motor_mock mocks/MockMotors.cpp)
 
 add_executable(gps_sim sim/SimGps.cpp)
-
-add_executable(keyboard_control control/Keyboard.cpp)
 
 add_executable(signal_service station/SignalStrengthService.cpp)
 
@@ -183,11 +180,8 @@ add_dependencies(gps_service ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORT
 target_link_libraries(hello ${catkin_LIBRARIES})
 
 target_link_libraries(gps_mock ${catkin_LIBRARIES})
-target_link_libraries(motor_mock ${catkin_LIBRARIES})
 
 target_link_libraries(gps_sim ${catkin_LIBRARIES})
-
-target_link_libraries(keyboard_control ${catkin_LIBRARIES})
 
 target_link_libraries(signal_service ${catkin_LIBRARIES} ${PROJECT_SOURCE_DIR}/external/libssh-0.9.5/build/lib/libssh.so.4)
 
