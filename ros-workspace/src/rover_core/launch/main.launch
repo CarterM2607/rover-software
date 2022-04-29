@@ -8,4 +8,10 @@
     <!--Sensors-->
     <include file="$(find ssrt_rover)/launch/sensors.launch"/>
 
+    <!--Phidgets-->
+    <include file="$(find ssrt_rover)/launch/phidgets.launch"/>
+
+    <!--Network-->
+    <node pkg="rover" type="signal_service" name="signal_service"/>
+
 </launch>

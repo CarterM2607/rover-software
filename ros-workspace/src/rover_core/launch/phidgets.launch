@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="rover_phidgets" name="DataLCD" type="DataLCD.py" output="screen"/> 
+</launch>
