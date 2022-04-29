@@ -1,0 +1,16 @@
+<package format="2">
+    <name>ssrt_rover</name>
+    <version>0.0.1</version>
+    <description>Core launch configuration for the rover</description>
+    <maintainer email="derek.braun.99@gmail.com">Derek Braun</maintainer>
+    <license>TODO</license>
+    <url type="code">https://github.com/ucalgary-rover/rover-software</url>
+    <author email="derek.braun.99@gmail.com">Derek Braun</author>
+    <buildtool_depend>catkin</buildtool_depend>
+    <build_depend>rospy</build_depend>
+    <build_export_depend>rospy</build_export_depend>
+    <exec_depend>rospy</exec_depend>
+    <build_depend>roscpp</build_depend>
+    <build_export_depend>roscpp</build_export_depend>
+    <exec_depend>roscpp</exec_depend>
+</package>

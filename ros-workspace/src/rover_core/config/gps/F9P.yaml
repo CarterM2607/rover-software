@@ -1,0 +1,94 @@
+# =============Interface setting=============
+device: /dev/serial/by-id/usb-u-blox_AG_-_www.u-blox.com_u-blox_GNSS_receiver-if00 # Path to the device port
+# OR device: /dev/ttyACM0
+config_on_startup: false
+uart1:
+  baudrate: 57600 #Bit rate of the serial communication. Defaults to 9600.
+  in: PROTO_RTCM3 # UART1 in communication protocol. Defaults to UBX, NMEA & RTCM. See CfgPRT message for possible values. (PROTO_RTCM3 = 32)
+  out: PROTO_RTCM3 # UART1 out communication protocol. Defaults to UBX, NMEA & RTCM. See CfgPRT message for possible values
+#
+#load: # Parameters for loading the configuration to non-volatile memory. See ublox_msgs/CfgCFG.msg
+#  mask: ??? # uint32_t. Mask of the configurations to load.
+#  device: ??? # uint32_t. Mask which selects the devices for the load command.
+#
+#save: # Parameters for saving the configuration to non-volatile memory. See ublox_msgs/CfgCFG.msg
+#  mask: 3103 # uint32_t. Mask of the configurations to save.
+#  device: 4 # uint32_t. Mask which selects the devices for the save command.
+
+#save_on_shutdown: false #If true, the node will send a UBX-UPD-SOS command to save the BBR to flash memory on shutdown.
+#clear_bbr: false #If true, the node will send a UBX-UPD-SOS command to clear the flash memory during configuration. Defaults to false.
+
+#raw_data: false # Whether the device is a raw data product. Defaults to false. Firmware <= 7.03 only
+
+# =============GPS configuration=============
+enable_ppp: false # Enable precise-point-positioning system. Defaults to false.
+dynamic_model: portable #automotive #portable, stationary, pedestrian, automotive, sea, airborne+G, wristwatch
+fix_mode: auto #Type of fixes supported: 2d, 3d or both
+dr_limit: 0 #Max time in seconds to use dead reckoning after signal is lost. Defaults to 0.
+
+gnss:
+  gps: true #Enable GPS receiver. Defaults to true.
+  glonass: true #Enable GLONASS receiver. Defaults to false.
+  beidou: true #Enable BeiDou receiver. Defaults to false.
+  galileo: true #Enable Galileo receiver. Defaults to false.
+#  qzss: false #Enable QZSS receiver. Defaults to false.
+#  qzss_sig_cfg: L1CA #QZSS signal configuration. Defaults to L1CA. See CfgGNSS message for constants.
+#  imes: true #Enable IMES receiver. Defaults to false.
+#  sbas: true # Enable satellite-based augmentation system. Defaults to false.
+
+#nmea:
+#  set: true #If true, the NMEA will be configured.
+#  version: 65 #NMEA version.
+#  num_sv: 8 #Maximum Number of SVs to report per TalkerId.
+#  sv_numbering: 1 #Configures the display of satellites that do not have an NMEA-defined value.
+#  compat: true #Enable compatibility mode.
+#  consider: true #Enable considering mode
+#  limit82: true #Enable strict limit to 82 characters maximum.
+#  high_prec: true #Enable high precision mode.
+#  filter:
+#    pos: true #Enable position output for failed or invalid fixes.
+#    msk_pos: true # Enable position output for invalid fixes.
+#    time: true #Enable time output for invalid times.
+#    date: true #Enable date output for invalid dates.
+#    gps_only: true #Restrict output to GPS satellites only.
+#    track: true #Enable COG output even if COG is frozen
+#  gnssToFilter: #Filters out satellites based on their GNSS.
+#    gps: false #Disable reporting of GPS satellites
+#    sbas: true #Disable reporting of SBAS satellites
+#    qzss: true #Disable reporting of QZSS satellites.
+#    glonass: false #Disable reporting of GLONASS satellites.
+#    beidou: false #Disable reporting of BeiDou satellites.
+##  main_talker_id: 0 #his field enables the main Talker ID to be overridden
+##  gsv_talker_id: [0,0] #This field enables the GSV Talker ID to be overridden
+##  bds_talker_id: [0,0] #Sets the two characters that should be used for the BeiDou Talker ID.
+
+#sbas:
+#  max: ??? # Maximum number of SBAS channels. Defaults to 0.
+#  usage: ??? # See CfgSBAS message for details. Defaults to 0.
+
+#dat: #Configuring the datum type (optional). See the CfgDAT message
+#  set: ??? #If true, the node will the datum based on the parameters below (required if true). Defaults to false.
+#  majA: ??? # Semi-major Axis [m]
+#  flat: ??? # 1.0 / Flattening
+#  shift: ??? # [X-axis, Y-axis, Z-axis] shift [m]
+#  rot: ??? # [X, Y, Z] rotation [s]
+#  scale: ??? # scale change [ppm]
+
+# =============ROS configuration=============
+frame_id: gps_ublox # ROS name prepended to frames produced by the node.
+rate: 4 # Rate in Hz of measurements. Defaults to 4.
+nav_rate: 1 # How often navigation solutions are published in number of measurement cycles. Defaults to 1.
+publish:
+#  all: true
+#  aid:
+#    all: false
+#  rxm:
+#    all: false
+#  mon:
+#    all: false
+  nav:
+    posecef: true
+    pvt: true
+    prt: true
+#  esf:
+#    all: false
