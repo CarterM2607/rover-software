@@ -1,3 +1,9 @@
-[submodule "ros-workspace/src/drivers/ublox"]
-	path = ros-workspace/src/drivers/ublox
-	url = https://github.com/ucalgary-rover/ublox.git
+[submodule "rover-ui/react-rover-ui"]
+	path = rover-ui/react-rover-ui
+	url = https://github.com/ucalgary-rover/react-rover-ui.git
+[submodule "rover-ui/express-map-server"]
+	path = rover-ui/express-map-server
+	url = https://github.com/ucalgary-rover/express-map-server.git
+[submodule "mechatronics"]
+	path = mechatronics
+	url = https://github.com/ucalgary-rover/mechatronics.git
