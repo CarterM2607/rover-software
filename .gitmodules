@@ -7,3 +7,6 @@
 [submodule "mechatronics"]
 	path = mechatronics
 	url = https://github.com/ucalgary-rover/mechatronics.git
+[submodule "ros-workspace"]
+	path = ros-workspace
+	url = https://github.com/ucalgary-rover/ros-workspace.git
